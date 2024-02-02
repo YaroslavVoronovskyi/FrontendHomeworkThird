@@ -24,11 +24,20 @@ const user = {
 };
 
 function cloneObject(user) {
-	const newUser = Object.assign({}, user);
+	if (user == null || typeof (user) != 'object') {
+		return user;
+	}
+	let newUser = new user.constructor();
+	for (let key in user) {
+		newUser[key] = cloneObject(user[key]);
+	}
 	return newUser;
 }
 
-const newUser = cloneObject(user);
+let newUser = cloneObject(user);
+newUser.userInfo.id = 4;
+newUser.userInfo.bio.location.state = 'Kyiv';
+newUser.userInfo.bio.phone = '381111111111';
 
 console.log(user);
 console.log(newUser);
